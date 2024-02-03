@@ -6,12 +6,13 @@ const todoRoutes = require('./routes/todos');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.get('/', (req, res) => {
+  res.send('Hello CRUD');
+});
+
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost:27017/todo_app', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO);
 
 const db = mongoose.connection;
 
