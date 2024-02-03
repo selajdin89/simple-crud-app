@@ -12,7 +12,17 @@ app.get('/', (req, res) => {
 
 app.use(bodyParser.json());
 
-mongoose.connect(process.env.MONGO);
+mongoose.set('strictQuery', true);
+const connect = async () => {
+  try {
+    await mongoose.connect(
+      'mongodb+srv://admin:selajdin1989@todosapi.okovrwd.mongodb.net/?retryWrites=true&w=majority'
+    );
+    console.log('Connected to mongoDB!');
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const db = mongoose.connection;
 
@@ -24,5 +34,6 @@ db.once('open', () => {
 app.use('/todos', todoRoutes);
 
 app.listen(PORT, () => {
+  connect();
   console.log(`Server is running on port ${PORT}`);
 });
